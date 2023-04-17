@@ -35,7 +35,7 @@ namespace Vepara_ASPNetCore.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Index(IFormCollection form)
+        public IActionResult Index(IFormCollection form)
         {
             var paymentForm = GetPaymentInfo(form);
 
@@ -54,10 +54,8 @@ namespace Vepara_ASPNetCore.Controllers
 
             if (paymentForm.Is3D == PaymentType.WhiteLabel3D || paymentForm.Is3D == PaymentType.WhiteLabel2DOr3D)
             {
-                //// 3D
-
+                // 3D
                 Vepara3DPaymentRequest paymentRequest = new Vepara3DPaymentRequest(settings, paymentForm.SelectedPosData);
-
 
                 string baseUrl = _httpContextAccessor.HttpContext.Request.Scheme + "://" + _httpContextAccessor.HttpContext.Request.Host.Value;
                 paymentRequest.ReturnUrl = baseUrl + "/Checkout/SuccessUrl";
@@ -85,12 +83,10 @@ namespace Vepara_ASPNetCore.Controllers
 
                 string requestForm = paymentRequest.GenerateFormHtmlToRedirect(_config["Vepara:BaseUrl"] + "/api/pay3d");
 
-                var bytes = Encoding.UTF8.GetBytes(requestForm);
+              //  var bytes = Encoding.UTF8.GetBytes(requestForm);
+              //  await HttpContext.Response.Body.WriteAsync(bytes, 0, bytes.Length);
 
-
-                await HttpContext.Response.Body.WriteAsync(bytes, 0, bytes.Length);
-
-                // return View("Request3DVepara", requestForm);
+                return View("Request3DVepara", requestForm);
             }
 
             return View();
@@ -223,15 +219,15 @@ namespace Vepara_ASPNetCore.Controllers
 
         public IActionResult SuccessUrl()
         {
-            string vepara__status = HttpContext.Request.Query["vepara__status"];
+            string vepara__status = HttpContext.Request.Query["payment_status"];
             string order_no = HttpContext.Request.Query["order_no"];
             string invoice_id = HttpContext.Request.Query["invoice_id"];
             string status_description = HttpContext.Request.Query["status_description"];
-            string vepara__payment_method = HttpContext.Request.Query["vepara__payment_method"];
+            string vepara__payment_method = HttpContext.Request.Query["payment_method"];
 
             string fullQuery = " invoice_id : " + invoice_id
-                                                + "vepara__status :" + vepara__status + "order_no :" + order_no + "status_description :" + status_description
-                                                + "vepara__payment_method :" + vepara__payment_method;
+                                                + "payment_status :" + vepara__status + "order_no :" + order_no + "status_description :" + status_description
+                                                + "payment_method :" + vepara__payment_method;
 
             ViewBag.SuccessMessage = fullQuery;
 
@@ -244,14 +240,14 @@ namespace Vepara_ASPNetCore.Controllers
             string error = HttpContext.Request.Query["error"];
             string invoice_id = HttpContext.Request.Query["invoice_id"];
 
-            string vepara__status = HttpContext.Request.Query["vepara__status"];
+            string vepara__status = HttpContext.Request.Query["payment_status"];
             string order_no = HttpContext.Request.Query["order_no"];
             string status_description = HttpContext.Request.Query["status_description"];
-            string vepara__payment_method = HttpContext.Request.Query["vepara__payment_method"];
+            string vepara__payment_method = HttpContext.Request.Query["payment_method"];
 
             string fullQuery = "error_code : " + error_code + " invoice_id : " + invoice_id + " error : " + error
-                               + "vepara__status :" + vepara__status + "order_no :" + order_no + "status_description :" + status_description
-                               + "vepara__payment_method :" + vepara__payment_method;
+                               + "payment_status :" + vepara__status + "order_no :" + order_no + "status_description :" + status_description
+                               + "payment_method :" + vepara__payment_method;
 
             ViewBag.Error = fullQuery;
 
