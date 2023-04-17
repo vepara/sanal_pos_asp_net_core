@@ -1,0 +1,22 @@
+﻿@* <link rel="stylesheet" type="text/css" href="~/lib/semantic/semantic.min.css"> *@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.5.0/semantic.min.css" integrity="sha512-KXol4x3sVoO+8ZsWPFI/r5KBVB/ssCGB5tsv2nVOKwLg33wTFP3fmnXa47FdSVIshVTgsYk/1734xSk9aFIa4A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" type="text/css" href="~/css/card-js-and-cicleloader.min.css">
+
+<form action="" id="co-payment-method-form" name="form" class="ui form fluid" style="padding:10px;">
+    <div class="card-js" data-stripe="true">
+        <input class="name" id="the-card-name-id" name="CardholderName" placeholder="Kart Sahibinin Adı" required>
+        <input class="card-number my-custom-class" name="card-number" id="CardNumber" placeholder="Kart Numarası" required>
+
+        <input class="expiry-month" name="ExpireMonth" required>
+        <input class="expiry-year" name="ExpireYear" required>
+        <input class="cvc" name="CardCode" placeholder="Güvenlik Kodu (CVV)" required>
+    </div>
+
+    <input type="button" value="Ödeme Yap" />
+</form>
+
+@section Scripts {
+    @* <script src="~/lib/semantic/semantic.min.js"></script> *@
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.5.0/semantic.min.js" integrity="sha512-Xo0Jh8MsOn72LGV8kU5LsclG7SUzJsWGhXbWcYs2MAmChkQzwiW/yTQwdJ8w6UA9C6EVG18GHb/TrYpYCjyAQw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="~/js/card-js.min.js"></script>
+}
